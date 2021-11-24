@@ -2,7 +2,7 @@
   "name": "@santigp258/react-simple-lightbox-video-image",
   "description": "A simple and customizable react lightbox component that support video and image. Also enables swipe and doble tap gesture. This component can be compatible with Next js",
   "author": "Santigp258 <santigp258@gmail.com>",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
