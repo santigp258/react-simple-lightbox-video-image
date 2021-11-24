@@ -1,0 +1,10 @@
+*.log
+.DS_Store
+node_modules
+.cache
+dist
+stories
+storybook-static
+.storybook
+test
+example

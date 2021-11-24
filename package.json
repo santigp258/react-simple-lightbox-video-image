@@ -1,6 +1,7 @@
 {
   "name": "@santigp258/react-simple-lightbox-video-image",
-  "author": "santigp258@gmail.com",
+  "description": "A simple and customizable react lightbox component that support video and image. Also enables swipe and doble tap gesture. This component can be compatible with Next js",
+  "author": "Santigp258 <santigp258@gmail.com>",
   "version": "1.0.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -64,5 +65,18 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.5.2"
-  }
+  },
+  "keywords": [
+    "lightbox",
+    "react",
+    "pinch",
+    "zoom",
+    "swiping",
+    "mobile",
+    "desktop",
+    "video",
+    "image"
+  ],
+  "repository": "https://github.com/santigp258/react-simple-lightbox-video-image/",
+  "bugs": "https://github.com/santigp258/react-simple-lightbox-video-image//issues"
 }
