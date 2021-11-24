@@ -11,6 +11,7 @@ yarn add @santigp258/react-simple-lightbox-video-image
 ```
 
 ## Or
+
 ```bash
 npm install @santigp258/react-simple-lightbox-video-image
 ```
@@ -53,7 +54,6 @@ const Example = () => {
         <ReactSimpleImageVideoLightbox
           data={data}
           onCloseCallback={handleClose}
-          preventHidden
         />
       ) : null}
     </>
@@ -65,8 +65,10 @@ Using with Next js
 
 ```tsx
 import React from 'react';
+import Image from 'next/image';
 import ReactSimpleImageVideoLightbox, {
   ResourcersType,
+  VideoImagePropsType,
 } from '@santigp258/react-simple-lightbox-video-image';
 
 const data: ResourcersType[] = [
@@ -113,7 +115,6 @@ const Example = () => {
           data={data}
           CustomImage={renderCustomImage}
           onCloseCallback={handleClose}
-          preventHidden
         />
       ) : null}
     </>
