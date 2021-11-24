@@ -9,6 +9,20 @@ export type ResourcersType = {
   altTag: string;
 };
 
+export type VideoImagePropsType = {
+  title: string;
+  src: string;
+  alt: string;
+  onLoad: () => void;
+  className?: string;
+  style?: CSSProperties;
+};
+
+export type ResourceCustomPropsType = {
+  dataQuantity: number;
+  index: number;
+};
+
 export interface ReactSimpleImageVideoLightboxProps {
   /**
    * Array of resources
@@ -24,19 +38,24 @@ export interface ReactSimpleImageVideoLightboxProps {
   showResourceCount?: boolean;
 
   /**
+   * backdrop background color
+   */
+  backdropBg?: string;
+
+  /**
    *Property that prevents scroll from being hidden
    */
   preventHidden?: boolean;
 
   /**
-   * Callback that is executed when the lightbox is closed
+   * Main container Styles
    */
-  onCloseCallback?: () => void;
+  containerStyle?: CSSProperties;
 
   /**
-   * Callback to be executed when the user wants change the current content that is displaying
+   * Main container ClassNames
    */
-  onNavigationCallback?: (currentIndex: number) => void;
+  containerClassName?: string;
 
   /**
    * Image container Styles
@@ -62,4 +81,60 @@ export interface ReactSimpleImageVideoLightboxProps {
    * Image Classnames
    */
   imageClassname?: string;
+
+  /**
+   * Image Styles
+   */
+  imageStyle?: CSSProperties;
+
+  /**
+   * Resource count Classnames
+   */
+  resourceCountClassname?: string;
+
+  /**
+   * Resource count Styles
+   */
+  resourceCountStyle?: CSSProperties;
+
+  /**
+   * Frame Classnames
+   */
+  frameClassname?: string;
+
+  /**
+   * Frame Styles
+   */
+  frameStyle?: CSSProperties;
+
+  /**
+   * Custom image component. This is useful if you use Next js
+   */
+
+  CustomImage?: (props: VideoImagePropsType) => JSX.Element;
+
+  /**
+   * Custom video component. A frame tag is currently used. If you need the video tag, you can perfectly well do it using this:
+   */
+  CustomVideo?: (props: VideoImagePropsType) => JSX.Element;
+
+  /**
+   * Custom loader component
+   */
+  CustomLoader?: () => JSX.Element;
+
+  /**
+   * Custom Resource count component
+   */
+  CustomResourceCount?: (props: ResourceCustomPropsType) => JSX.Element;
+
+  /**
+   * Callback that is executed when the lightbox is closed
+   */
+  onCloseCallback?: () => void;
+
+  /**
+   * Callback to be executed when the user wants change the current content that is displaying
+   */
+  onNavigationCallback?: (currentIndex: number) => void;
 }

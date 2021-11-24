@@ -23,22 +23,35 @@ import {
 import * as utils from '../helpers';
 import { useHiddenScroll } from '../hooks/useHiddenScroll';
 import { ReactSimpleImageVideoLightboxProps } from '../types';
+import Chevron from '../components/Chevron';
 
 /**
- * A simple and customizable react lightbox component that support video and image
+ * A simple and customizable react lightbox component that support video and image. Also enables swipe and doble tap gesture
  */
 export const ReactSimpleImageVideoLightbox = ({
+  data,
   startIndex = 0,
   showResourceCount = true,
+  backdropBg = 'rgba(0,0,0,.5)',
+  preventHidden,
   onCloseCallback,
   onNavigationCallback,
+  CustomImage,
+  CustomVideo,
+  CustomLoader,
+  CustomResourceCount,
   imageContainerStyle,
-  data,
+  containerStyle,
+  containerClassName,
   imageContainerClassName,
   resourceContainerStyle,
   resourceContainerClassName,
   imageClassname,
-  preventHidden
+  imageStyle,
+  resourceCountClassname,
+  resourceCountStyle,
+  frameClassname,
+  frameStyle,
 }: ReactSimpleImageVideoLightboxProps) => {
   const [state, setState] = useState({
     x: INITIAL_X,
@@ -286,42 +299,82 @@ export const ReactSimpleImageVideoLightbox = ({
             className={imageContainerClassName}
             key={i}
           >
-            <img
-              title={resource.title}
-              className={imageClassname}
-              alt={resource.altTag}
-              src={resource.url}
-              onLoad={() => {
-                setLoading(false);
-              }}
-            />
+            {CustomImage ? (
+              <CustomImage
+                title={resource.title}
+                className={imageClassname}
+                style={imageStyle}
+                alt={resource.altTag}
+                src={resource.url}
+                onLoad={() => {
+                  setLoading(false);
+                }}
+              />
+            ) : (
+              <img
+                title={resource.title}
+                className={imageClassname}
+                style={imageStyle}
+                alt={resource.altTag}
+                src={resource.url}
+                onLoad={() => {
+                  setLoading(false);
+                }}
+              />
+            )}
           </div>
         );
       }
 
       return (
-        <iframe
-          key={i}
-          width="560"
-          height="315"
-          src={resource.url}
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          title={resource.title}
-          allowFullScreen
-          style={{
-            pointerEvents: state.scale === 1 ? 'auto' : 'none',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: '100%',
-            height: '100%',
-            transform: `translate(${state.x}px, ${state.y}px)`,
-            transition: 'transform 0.5s ease-out',
-          }}
-          onLoad={() => {
-            setLoading(false);
-          }}
-        ></iframe>
+        <>
+          {CustomVideo ? (
+            <CustomVideo
+              onLoad={() => {
+                setLoading(false);
+              }}
+              style={{
+                pointerEvents: state.scale === 1 ? 'auto' : 'none',
+                maxWidth: '100%',
+                maxHeight: '100%',
+                width: '100%',
+                height: '100%',
+                transform: `translate(${state.x}px, ${state.y}px)`,
+                transition: 'transform 0.5s ease-out',
+                ...frameStyle,
+              }}
+              className={frameClassname}
+              alt={resource.altTag}
+              src={resource.url}
+              title={resource.title}
+            />
+          ) : (
+            <iframe
+              key={i}
+              width="560"
+              height="315"
+              src={resource.url}
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              title={resource.title}
+              allowFullScreen
+              className={frameClassname}
+              style={{
+                pointerEvents: state.scale === 1 ? 'auto' : 'none',
+                maxWidth: '100%',
+                maxHeight: '100%',
+                width: '100%',
+                height: '100%',
+                transform: `translate(${state.x}px, ${state.y}px)`,
+                transition: 'transform 0.5s ease-out',
+                ...frameStyle,
+              }}
+              onLoad={() => {
+                setLoading(false);
+              }}
+            ></iframe>
+          )}
+        </>
       );
     });
 
@@ -332,37 +385,54 @@ export const ReactSimpleImageVideoLightbox = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{
-          top: '0px',
-          left: '0px',
-          zIndex: 999,
-          overflow: 'hidden',
-          position: 'fixed',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'row',
-          height: '100%',
-          width: '100%',
-          backgroundColor: 'rgba(0,0,0,.5)',
-        }}
+        className={containerClassName}
+        style={
+          containerStyle
+            ? containerStyle
+            : {
+                top: '0px',
+                left: '0px',
+                zIndex: 999,
+                overflow: 'hidden',
+                position: 'fixed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                height: '100%',
+                width: '100%',
+                backgroundColor: backdropBg,
+              }
+        }
       >
         {showResourceCount ? (
-          <div
-            style={{
-              position: 'absolute',
-              top: '10px',
-              left: '10px',
-              padding: '15px',
-              color: 'white',
-              fontWeight: 'bold',
-            }}
-          >
-            <span>{index + 1}</span> / <span>{data.length}</span>
-          </div>
+          <>
+            {CustomResourceCount ? (
+              <CustomResourceCount index={index} dataQuantity={data.length} />
+            ) : (
+              <div
+                className={resourceCountClassname}
+                style={
+                  resourceCountStyle
+                    ? resourceCountStyle
+                    : {
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        padding: '15px',
+                        color: 'white',
+                        fontWeight: 'bold',
+                      }
+                }
+              >
+                <span>{index + 1}</span> / <span>{data.length}</span>
+              </div>
+            )}
+          </>
         ) : null}
 
-        <div
+        <Chevron
+          variant="close"
           style={{
             position: 'absolute',
             top: '10px',
@@ -374,20 +444,11 @@ export const ReactSimpleImageVideoLightbox = ({
           }}
           className="react-lightbox-component-icon-hover"
           onClick={onCloseCallback}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="36px"
-            viewBox="0 0 24 24"
-            width="36px"
-            fill="#FFFFFF"
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-          </svg>
-        </div>
+        />
+
         {index + 1 !== 1 ? (
-          <div
+          <Chevron
+            variant="left"
             style={{
               position: 'absolute',
               zIndex: 1,
@@ -396,24 +457,11 @@ export const ReactSimpleImageVideoLightbox = ({
             }}
             onClick={swipeLeft}
             className="react-lightbox-component-icon-left"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="48px"
-              className="react-lightbox-component-icon-hover"
-              viewBox="0 0 24 24"
-              width="48px"
-              fill="#FFFFFF"
-            >
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-            </svg>
-          </div>
-        ) : (
-          <></>
-        )}
+          />
+        ) : null}
         {index + 1 !== data.length ? (
-          <div
+          <Chevron
+            variant="right"
             style={{
               position: 'absolute',
               zIndex: 1,
@@ -422,35 +470,27 @@ export const ReactSimpleImageVideoLightbox = ({
             }}
             onClick={swipeRight}
             className="react-lightbox-component-icon-right"
-          >
-            <svg
-              className="react-lightbox-component-icon-hover "
-              xmlns="http://www.w3.org/2000/svg"
-              height="48px"
-              viewBox="0 0 24 24"
-              width="48px"
-              fill="#FFFFFF"
-            >
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-            </svg>
-          </div>
+          />
         ) : null}
         {loading ? (
           <div style={{ margin: 'auto', position: 'fixed' }}>
-            <div
-              style={{
-                animation:
-                  '1.0s linear infinite react_simple_image_video_spinner',
-                border: 'solid 5px #ffffff',
-                borderBottomColor: '#cfd0d1',
-                borderRadius: '50%',
-                height: 30,
-                width: 30,
-                position: 'fixed',
-                transform: 'translate3d(-50%, -50%, 0)',
-              }}
-            ></div>
+            {CustomLoader ? (
+              <CustomLoader />
+            ) : (
+              <div
+                style={{
+                  animation:
+                    '1.0s linear infinite react_simple_image_video_spinner',
+                  border: 'solid 5px #ffffff',
+                  borderBottomColor: '#cfd0d1',
+                  borderRadius: '50%',
+                  height: 30,
+                  width: 30,
+                  position: 'fixed',
+                  transform: 'translate3d(-50%, -50%, 0)',
+                }}
+              ></div>
+            )}
           </div>
         ) : null}
 
