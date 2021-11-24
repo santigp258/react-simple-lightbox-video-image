@@ -5,6 +5,7 @@ import React, {
   useRef,
   useCallback,
 } from 'react';
+import DefaultStyle from '../components/DefaultStyle';
 
 import {
   MIN_SCALE,
@@ -20,9 +21,13 @@ import {
 } from '../constants';
 
 import * as utils from '../helpers';
+import { useHiddenScroll } from '../hooks/useHiddenScroll';
 import { ReactSimpleImageVideoLightboxProps } from '../types';
 
-const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideoLightboxProps> = ({
+/**
+ * A simple and customizable react lightbox component that support video and image
+ */
+export const ReactSimpleImageVideoLightbox = ({
   startIndex = 0,
   showResourceCount = true,
   onCloseCallback,
@@ -33,7 +38,8 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
   resourceContainerStyle,
   resourceContainerClassName,
   imageClassname,
-}) => {
+  preventHidden
+}: ReactSimpleImageVideoLightboxProps) => {
   const [state, setState] = useState({
     x: INITIAL_X,
     y: INITIAL_Y,
@@ -53,19 +59,7 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
   const [swiping, setSwiping] = useState(false);
   const [isDoubleTap, setIsDoubleTap] = useState(false);
 
-  useEffect(() => {
-    const body = document.querySelector('body');
-    if (body) {
-      body.style.touchAction = 'none';
-      body.style.overflow = 'hidden';
-    }
-    return () => {
-      if (body) {
-        body.style.touchAction = '';
-        body.style.overflow = '';
-      }
-    };
-  }, []);
+  useHiddenScroll(preventHidden);
 
   const zoomTo = (scaleZoom: number) => {
     const frame = () => {
@@ -134,16 +128,6 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
     if (event.touches.length === 2) handlePinchMove(event);
   };
 
-  const doubleTapAction = () => {
-    setState({
-      x: INITIAL_X,
-      y: INITIAL_Y,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      scale: INITIAL_SCALE,
-    });
-  };
-
   const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
     if (event.touches.length > 0) return null;
     if (state.scale > MAX_SCALE) return zoomTo(MAX_SCALE);
@@ -154,7 +138,13 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
     }
 
     if (isDoubleTap) {
-      return doubleTapAction();
+      return setState({
+        x: INITIAL_X,
+        y: INITIAL_Y,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        scale: INITIAL_SCALE,
+      });
     }
 
     if (swiping && state.scale === 1) {
@@ -282,8 +272,8 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
     }));
   };
 
-  const getResources = () => {
-    return data.map((resource, i) => {
+  const getResources = () =>
+    data.map((resource, i) => {
       if (resource.type === 'photo') {
         return (
           <div
@@ -334,46 +324,10 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
         ></iframe>
       );
     });
-  };
+
   return (
     <>
-      <style>
-        {`
-               @keyframes react_simple_image_video_spinner {
-                0% {
-                  transform: translate3d(-50%, -50%, 0) rotate(0deg);
-                }
-                100% {
-                  transform: translate3d(-50%, -50%, 0) rotate(360deg);
-                }
-              }
-              
-              .react-lightbox-component-icon-hover {
-                background-color: rgba(119, 119, 119, .1);
-                border-radius: 100%;
-              }
-              .react-lightbox-component-icon-hover:hover {
-                background-color: rgba(119, 119, 119, .6);
-               
-              }
-              
-              .react-lightbox-component-icon-right {
-                right: 0px;
-              }
-              .react-lightbox-component-icon-left {
-                left: 10px;
-              }
-              @media (min-width: 768px) {
-                .react-lightbox-component-icon-right {
-                  right: 10px;
-                }
-                .react-lightbox-component-icon-left {
-                  left: 10px;
-                }
-              }
-              
-                `}
-      </style>
+      <DefaultStyle />
       <div
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -393,7 +347,7 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
           backgroundColor: 'rgba(0,0,0,.5)',
         }}
       >
-        {showResourceCount && (
+        {showResourceCount ? (
           <div
             style={{
               position: 'absolute',
@@ -406,7 +360,7 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
           >
             <span>{index + 1}</span> / <span>{data.length}</span>
           </div>
-        )}
+        ) : null}
 
         <div
           style={{
@@ -510,5 +464,3 @@ const ReactNextVideoImageLightBox: React.FunctionComponent<ReactSimpleImageVideo
     </>
   );
 };
-
-export default ReactNextVideoImageLightBox;
