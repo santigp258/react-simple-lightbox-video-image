@@ -1,0 +1,10 @@
+export const MIN_SCALE = 1;
+export const MAX_SCALE = 4;
+export const SETTLE_RANGE = 0.001;
+export const ADDITIONAL_LIMIT = 0.2;
+export const DOUBLE_TAP_THRESHOLD = 300;
+export const ANIMATION_SPEED = 0.04;
+export const RESET_ANIMATION_SPEED = 0.08;
+export const INITIAL_X = 0;
+export const INITIAL_Y = 0;
+export const INITIAL_SCALE = 1;
