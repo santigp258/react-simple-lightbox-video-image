@@ -525,25 +525,27 @@ export const ReactSimpleImageVideoLightbox = ({
           </>
         ) : null}
         {loading ? (
-          <div style={{ margin: 'auto', position: 'fixed' }}>
+          <>
             {CustomLoader ? (
               <CustomLoader />
             ) : (
-              <div
-                style={{
-                  animation:
-                    '1.0s linear infinite react_simple_image_video_spinner',
-                  border: 'solid 5px #ffffff',
-                  borderBottomColor: '#cfd0d1',
-                  borderRadius: '50%',
-                  height: 30,
-                  width: 30,
-                  position: 'fixed',
-                  transform: 'translate3d(-50%, -50%, 0)',
-                }}
-              ></div>
+              <div style={{ margin: 'auto', position: 'fixed' }}>
+                <div
+                  style={{
+                    animation:
+                      '1.0s linear infinite react_simple_image_video_spinner',
+                    border: 'solid 5px #ffffff',
+                    borderBottomColor: '#cfd0d1',
+                    borderRadius: '50%',
+                    height: 30,
+                    width: 30,
+                    position: 'fixed',
+                    transform: 'translate3d(-50%, -50%, 0)',
+                  }}
+                ></div>
+              </div>
             )}
-          </div>
+          </>
         ) : null}
 
         <div

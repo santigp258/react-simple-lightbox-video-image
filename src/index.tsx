@@ -1,6 +1,20 @@
 import { ReactSimpleImageVideoLightbox } from './core';
+import {
+  ReactSimpleImageVideoLightboxProps,
+  ChevronProps,
+  VideoImagePropsType,
+  ResourceItemType,
+  ResourcersType,
+  ResourceCustomPropsType,
+} from './types/index';
 
-// Please do not use types off of a default export module or else Storybook Docs will suffer.
-// see: https://github.com/storybookjs/storybook/issues/9556
+export type {
+  ReactSimpleImageVideoLightboxProps,
+  ChevronProps,
+  VideoImagePropsType,
+  ResourceItemType,
+  ResourcersType,
+  ResourceCustomPropsType,
+};
 
 export default ReactSimpleImageVideoLightbox;
