@@ -1,9 +1,6 @@
 import React from 'react';
+import { ChevronProps } from '../types';
 import { ChevronRight, ChevronLeft, ChevronClose } from './Icons';
-
-interface ChevronProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant: 'right' | 'left' | 'close';
-}
 
 const Chevron: React.FunctionComponent<ChevronProps> = ({
   variant,

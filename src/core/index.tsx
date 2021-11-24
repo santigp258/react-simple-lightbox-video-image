@@ -40,6 +40,9 @@ export const ReactSimpleImageVideoLightbox = ({
   CustomVideo,
   CustomLoader,
   CustomResourceCount,
+  CustomChevronRight,
+  CustomChevronLeft,
+  CustomCloseIcon,
   imageContainerStyle,
   containerStyle,
   containerClassName,
@@ -431,46 +434,95 @@ export const ReactSimpleImageVideoLightbox = ({
           </>
         ) : null}
 
-        <Chevron
-          variant="close"
-          style={{
-            position: 'absolute',
-            top: '10px',
-            zIndex: 50,
-            right: '10px',
-            padding: '5px',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-          }}
-          className="react-lightbox-component-icon-hover"
-          onClick={onCloseCallback}
-        />
+        {CustomCloseIcon ? (
+          <CustomCloseIcon
+            variant="close"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              zIndex: 50,
+              right: '10px',
+              padding: '5px',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+            }}
+            className="react-lightbox-component-icon-hover"
+            onClick={onCloseCallback}
+          />
+        ) : (
+          <Chevron
+            variant="close"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              zIndex: 50,
+              right: '10px',
+              padding: '5px',
+              color: '#FFFFFF',
+              cursor: 'pointer',
+            }}
+            className="react-lightbox-component-icon-hover"
+            onClick={onCloseCallback}
+          />
+        )}
 
         {index + 1 !== 1 ? (
-          <Chevron
-            variant="left"
-            style={{
-              position: 'absolute',
-              zIndex: 1,
-              color: '#FFFFFF',
-              cursor: 'pointer',
-            }}
-            onClick={swipeLeft}
-            className="react-lightbox-component-icon-left"
-          />
+          <>
+            {CustomChevronLeft ? (
+              <CustomChevronLeft
+                variant="left"
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  color: '#FFFFFF',
+                  cursor: 'pointer',
+                }}
+                onClick={swipeLeft}
+                className="react-lightbox-component-icon-left"
+              />
+            ) : (
+              <Chevron
+                variant="left"
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  color: '#FFFFFF',
+                  cursor: 'pointer',
+                }}
+                onClick={swipeLeft}
+                className="react-lightbox-component-icon-left"
+              />
+            )}
+          </>
         ) : null}
         {index + 1 !== data.length ? (
-          <Chevron
-            variant="right"
-            style={{
-              position: 'absolute',
-              zIndex: 1,
-              color: '#FFFFFF',
-              cursor: 'pointer',
-            }}
-            onClick={swipeRight}
-            className="react-lightbox-component-icon-right"
-          />
+          <>
+            {CustomChevronRight ? (
+              <CustomChevronRight
+                variant="right"
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  color: '#FFFFFF',
+                  cursor: 'pointer',
+                }}
+                onClick={swipeRight}
+                className="react-lightbox-component-icon-right"
+              />
+            ) : (
+              <Chevron
+                variant="right"
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  color: '#FFFFFF',
+                  cursor: 'pointer',
+                }}
+                onClick={swipeRight}
+                className="react-lightbox-component-icon-right"
+              />
+            )}
+          </>
         ) : null}
         {loading ? (
           <div style={{ margin: 'auto', position: 'fixed' }}>

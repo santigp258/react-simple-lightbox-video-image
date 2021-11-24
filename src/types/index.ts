@@ -9,6 +9,10 @@ export type ResourcersType = {
   altTag: string;
 };
 
+export interface ChevronProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'right' | 'left' | 'close';
+}
+
 export type VideoImagePropsType = {
   title: string;
   src: string;
@@ -127,6 +131,21 @@ export interface ReactSimpleImageVideoLightboxProps {
    * Custom Resource count component
    */
   CustomResourceCount?: (props: ResourceCustomPropsType) => JSX.Element;
+
+  /**
+   * Custom chevron right component
+   */
+  CustomChevronRight?: (defaultProps: ChevronProps) => JSX.Element;
+
+  /**
+   * Custom chevron left component
+   */
+  CustomChevronLeft?: (defaultProps: ChevronProps) => JSX.Element;
+
+  /**
+   * Custom close icon component
+   */
+  CustomCloseIcon?: (defaultProps: ChevronProps) => JSX.Element;
 
   /**
    * Callback that is executed when the lightbox is closed
