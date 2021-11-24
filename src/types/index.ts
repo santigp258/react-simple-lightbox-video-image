@@ -37,7 +37,7 @@ export interface ReactSimpleImageVideoLightboxProps {
   startIndex?: number;
 
   /**
-   * Component that enables displaying the resource count
+   * Boolean indicator whether the resource count should be display
    */
   showResourceCount?: boolean;
 

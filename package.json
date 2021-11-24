@@ -1,4 +1,6 @@
 {
+  "name": "@santigp258/react-simple-lightbox-video-image",
+  "author": "santigp258@gmail.com",
   "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -35,8 +37,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "react-simple-lightbox-video-image",
-  "author": "santigp258@gmail.com",
   "module": "dist/react-simple-lightbox-video-image.esm.js",
   "size-limit": [
     {
