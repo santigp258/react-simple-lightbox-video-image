@@ -9,9 +9,6 @@
     "dist",
     "src"
   ],
-  "engines": {
-    "node": "^12.0.0"
-  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
