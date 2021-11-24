@@ -72,6 +72,9 @@ It's possible, to style each HTML element of this component separetely. This can
 TODO:
 - Finish docs
 
+## Credits
+This component extends some funcionality from 
+[react-image-video-lightbox](https://github.com/Ngineer101/react-image-video-lightbox)
 ## License
 
 MIT © [Santigp258](https://github.com/santigp258/)
