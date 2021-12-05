@@ -287,8 +287,6 @@ export const ReactSimpleImageVideoLightbox = ({
       scale,
     }));
   };
-
-  console.log('lightbox');
   return (
     <>
       <DefaultStyle />

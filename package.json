@@ -75,7 +75,10 @@
     "mobile",
     "desktop",
     "video",
-    "image"
+    "image",
+    "story-book",
+    "typescript",
+    "next"
   ],
   "repository": "https://github.com/santigp258/react-simple-lightbox-video-image/",
   "bugs": "https://github.com/santigp258/react-simple-lightbox-video-image//issues"
