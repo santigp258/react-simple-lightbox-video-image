@@ -21,10 +21,10 @@ import {
 } from '../constants';
 
 import * as utils from '../helpers';
-import { useHiddenScroll } from '../hooks/useHiddenScroll';
-import { ReactSimpleImageVideoLightboxProps } from '../types';
+import {useHiddenScroll} from '../hooks/useHiddenScroll';
+import {ReactSimpleImageVideoLightboxProps} from '../types';
 import Chevron from '../components/Chevron';
-
+import Resource from '../components/Resource';
 /**
  * A simple and customizable react lightbox component that support video and image. Also enables swipe and doble tap gesture
  */
@@ -103,7 +103,7 @@ export const ReactSimpleImageVideoLightbox = ({
       const targetScale = utils.settle(
         RESET_ANIMATION_SPEED * scaleDelta + state.scale,
         INITIAL_SCALE,
-        SETTLE_RANGE
+        SETTLE_RANGE,
       );
 
       const nextWidth = window.innerWidth * targetScale;
@@ -185,7 +185,7 @@ export const ReactSimpleImageVideoLightbox = ({
     const currentIndex = index;
     if (currentIndex > 0) {
       setTimeout(() => {
-        setState((state) => ({
+        setState(state => ({
           ...state,
           x: INITIAL_X,
         }));
@@ -203,7 +203,7 @@ export const ReactSimpleImageVideoLightbox = ({
     const currentIndex = index;
     if (currentIndex < data.length - 1) {
       setTimeout(() => {
-        setState((state) => ({
+        setState(state => ({
           ...state,
           x: INITIAL_X,
         }));
@@ -242,13 +242,13 @@ export const ReactSimpleImageVideoLightbox = ({
 
   const handlePanMove = (event: TouchEvent<HTMLDivElement>) => {
     if (state.scale === 1) {
-      setState((state) => ({
+      setState(state => ({
         ...state,
         x: event.touches[0].clientX - swipeStartX,
       }));
     } else {
       event.preventDefault();
-      setState((state) => ({
+      setState(state => ({
         ...state,
         x: event.touches[0].clientX - swipeStartX,
         y: event.touches[0].clientY - swipeStartY,
@@ -270,7 +270,7 @@ export const ReactSimpleImageVideoLightbox = ({
     const scaleZoom = utils.between(
       MIN_SCALE - ADDITIONAL_LIMIT,
       MAX_SCALE + ADDITIONAL_LIMIT,
-      state.scale * (distance / lastDistance)
+      state.scale * (distance / lastDistance),
     );
     zoom(scaleZoom);
     setLastDistance(distance);
@@ -280,7 +280,7 @@ export const ReactSimpleImageVideoLightbox = ({
     const nextWidth = window.innerWidth * scale;
     const nextHeight = window.innerHeight * scale;
 
-    setState((state) => ({
+    setState(state => ({
       ...state,
       width: nextWidth,
       height: nextHeight,
@@ -288,99 +288,7 @@ export const ReactSimpleImageVideoLightbox = ({
     }));
   };
 
-  const getResources = () =>
-    data.map((resource, i) => {
-      if (resource.type === 'photo') {
-        return (
-          <div
-            style={{
-              pointerEvents: state.scale === 1 ? 'auto' : 'none',
-              transform: `translate(${state.x}px, ${state.y}px) scale(${state.scale})`,
-              transition: 'transform 0.5s ease-out',
-              ...imageContainerStyle,
-            }}
-            className={imageContainerClassName}
-            key={i}
-          >
-            {CustomImage ? (
-              <CustomImage
-                title={resource.title}
-                className={imageClassname}
-                style={imageStyle}
-                alt={resource.altTag}
-                src={resource.url}
-                onLoad={() => {
-                  setLoading(false);
-                }}
-              />
-            ) : (
-              <img
-                title={resource.title}
-                className={imageClassname}
-                style={imageStyle}
-                alt={resource.altTag}
-                src={resource.url}
-                onLoad={() => {
-                  setLoading(false);
-                }}
-              />
-            )}
-          </div>
-        );
-      }
-
-      return (
-        <>
-          {CustomVideo ? (
-            <CustomVideo
-              onLoad={() => {
-                setLoading(false);
-              }}
-              style={{
-                pointerEvents: state.scale === 1 ? 'auto' : 'none',
-                maxWidth: '100%',
-                maxHeight: '100%',
-                width: '100%',
-                height: '100%',
-                transform: `translate(${state.x}px, ${state.y}px)`,
-                transition: 'transform 0.5s ease-out',
-                ...frameStyle,
-              }}
-              className={frameClassname}
-              alt={resource.altTag}
-              src={resource.url}
-              title={resource.title}
-            />
-          ) : (
-            <iframe
-              key={i}
-              width="560"
-              height="315"
-              src={resource.url}
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              title={resource.title}
-              allowFullScreen
-              className={frameClassname}
-              style={{
-                pointerEvents: state.scale === 1 ? 'auto' : 'none',
-                maxWidth: '100%',
-                maxHeight: '100%',
-                width: '100%',
-                height: '100%',
-                transform: `translate(${state.x}px, ${state.y}px)`,
-                transition: 'transform 0.5s ease-out',
-                ...frameStyle,
-              }}
-              onLoad={() => {
-                setLoading(false);
-              }}
-            ></iframe>
-          )}
-        </>
-      );
-    });
-
+  console.log('lightbox');
   return (
     <>
       <DefaultStyle />
@@ -406,8 +314,7 @@ export const ReactSimpleImageVideoLightbox = ({
                 width: '100%',
                 backgroundColor: backdropBg,
               }
-        }
-      >
+        }>
         {showResourceCount ? (
           <>
             {CustomResourceCount ? (
@@ -426,8 +333,7 @@ export const ReactSimpleImageVideoLightbox = ({
                         color: 'white',
                         fontWeight: 'bold',
                       }
-                }
-              >
+                }>
                 <span>{index + 1}</span> / <span>{data.length}</span>
               </div>
             )}
@@ -529,7 +435,7 @@ export const ReactSimpleImageVideoLightbox = ({
             {CustomLoader ? (
               <CustomLoader />
             ) : (
-              <div style={{ margin: 'auto', position: 'fixed' }}>
+              <div style={{margin: 'auto', position: 'fixed'}}>
                 <div
                   style={{
                     animation:
@@ -541,18 +447,42 @@ export const ReactSimpleImageVideoLightbox = ({
                     width: 30,
                     position: 'fixed',
                     transform: 'translate3d(-50%, -50%, 0)',
-                  }}
-                ></div>
+                  }}></div>
               </div>
             )}
           </>
         ) : null}
 
+        {/* unmount component each time the resource changes  */}
         <div
           style={resourceContainerStyle}
-          className={resourceContainerClassName}
-        >
-          {getResources()[index]}
+          className={resourceContainerClassName}>
+          {data.map((resource, i) => {
+            if (index === i) {
+              return (
+                <Resource
+                  key={i}
+                  resource={resource}
+                  x={state.x}
+                  y={state.y}
+                  scale={state.scale}
+                  imageClassname={imageClassname}
+                  imageContainerStyle={imageContainerStyle}
+                  imageContainerClassName={imageContainerClassName}
+                  imageStyle={imageStyle}
+                  onLoad={() => {
+                    setLoading(false);
+                  }}
+                  CustomImage={CustomImage}
+                  CustomVideo={CustomVideo}
+                  frameClassname={frameClassname}
+                  frameStyle={frameStyle}
+                />
+              );
+            }
+
+            return null;
+          })}
         </div>
       </div>
     </>
